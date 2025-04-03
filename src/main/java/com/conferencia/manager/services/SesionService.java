@@ -4,10 +4,11 @@ import com.conferencia.manager.entity.Persona;
 import com.conferencia.manager.entity.Sesion;
 import com.conferencia.manager.repository.PersonaRepository;
 import com.conferencia.manager.repository.SesionRepository;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
+@Service
 public class SesionService {
     private final SesionRepository sesionRepository;
     private final PersonaRepository personaRepository;

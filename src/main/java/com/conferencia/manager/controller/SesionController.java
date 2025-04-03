@@ -27,7 +27,7 @@ public class SesionController {
         return sesionService.obtenerTodasLasSesiones();
     }
 
-    @PostMapping("/{sesionId}/persona")
+    @PostMapping("/{sesionId}/persona/{personaId}")
     public boolean agregarPersonaASesion(@PathVariable Long sesionId, @PathVariable Long personaId) {
         return sesionService.agregarPersonaASesion(sesionId, personaId);
     }
