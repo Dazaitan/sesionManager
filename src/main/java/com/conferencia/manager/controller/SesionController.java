@@ -6,6 +6,7 @@ import com.conferencia.manager.services.SesionService;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
@@ -19,7 +20,12 @@ public class SesionController {
 
     @PostMapping
     public Sesion crearSesion(@RequestParam LocalDateTime horaInicio, @RequestParam LocalDateTime horaFin) {
-        return sesionService.crearSesion(horaInicio, horaFin);
+        Sesion sesion = sesionService.crearSesion(horaInicio, horaFin);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+
+        sesion.setHoraInicio(LocalDateTime.parse(sesion.getHoraInicio().format(formatter), formatter));
+        sesion.setHoraFin(LocalDateTime.parse(sesion.getHoraFin().format(formatter), formatter));
+        return sesion;
     }
 
     @GetMapping

@@ -16,9 +16,7 @@ public class Sesion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private LocalDateTime fechaCreacion;
-
     private LocalDateTime horaInicio;
     private LocalDateTime horaFin;
 
@@ -51,5 +49,13 @@ public class Sesion {
 
     public boolean conflictoDeHorarios(LocalDateTime inicio, LocalDateTime fin) {
         return !horaFin.isBefore(inicio) && !horaInicio.isAfter(fin);
+    }
+    @Override
+    public String toString() {
+        return "Sesion{" +
+                "id=" + id +
+                ", horaInicio=" + horaInicio +
+                ", horaFin=" + horaFin +
+                '}';
     }
 }
