@@ -1,0 +1,122 @@
+{
+	"info": {
+		"_postman_id": "0870c563-b75c-4fa8-8b85-f95ba5f788c7",
+		"name": "API Manager Conferencias",
+		"description": "# 🚀 Get started here\n\nThis template guides you through CRUD operations (GET, POST, PUT, DELETE), variables, and tests.\n\n## 🔖 **How to use this template**\n\n#### **Step 1: Send requests**\n\nRESTful APIs allow you to perform CRUD operations using the POST, GET, PUT, and DELETE HTTP methods.\n\nThis collection contains each of these [request](https://learning.postman.com/docs/sending-requests/requests/) types. Open each request and click \"Send\" to see what happens.\n\n#### **Step 2: View responses**\n\nObserve the response tab for status code (200 OK), response time, and size.\n\n#### **Step 3: Send new Body data**\n\nUpdate or add new data in \"Body\" in the POST request. Typically, Body data is also used in PUT request.\n\n```\n{\n    \"name\": \"Add your name in the body\"\n}\n\n ```\n\n#### **Step 4: Update the variable**\n\nVariables enable you to store and reuse values in Postman. We have created a [variable](https://learning.postman.com/docs/sending-requests/variables/) called `base_url` with the sample request [https://postman-api-learner.glitch.me](https://postman-api-learner.glitch.me). Replace it with your API endpoint to customize this collection.\n\n#### **Step 5: Add tests in the \"Scripts\" tab**\n\nAdding tests to your requests can help you confirm that your API is working as expected. You can write test scripts in JavaScript and view the output in the \"Test Results\" tab.\n\n<img src=\"https://content.pstmn.io/fa30ea0a-373d-4545-a668-e7b283cca343/aW1hZ2UucG5n\" alt=\"\" height=\"1530\" width=\"2162\">\n\n## 💪 Pro tips\n\n- Use folders to group related requests and organize the collection.\n    \n- Add more [scripts](https://learning.postman.com/docs/writing-scripts/intro-to-scripts/) to verify if the API works as expected and execute workflows.\n    \n\n## 💡Related templates\n\n[API testing basics](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9a37a28-055b-49cd-8c7e-97494a21eb54&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[API documentation](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9c28f47-1253-44af-a2f3-20dce4da1f18&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[Authorization methods](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=31a9a6ed-4cdf-4ced-984c-d12c9aec1c27&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "40951832"
+	},
+	"item": [
+		{
+			"name": "Obtener sesiones",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/sesiones",
+				"description": "#### Obtener todas las sesiones\n\n**Ruta**: `GET /sesiones`  \n**Descripción**: Este endpoint recupera una lista de todas las sesiones existentes, incluyendo sus detalles y las personas asignadas.\n\n**Respuesta**:  \nDevuelve un array de objetos JSON con la información de las sesiones. Cada objeto incluye:\n\n- `id`: Identificador único de la sesión.\n    \n- `horaInicio`: Fecha y hora de inicio de la sesión.\n    \n- `horaFin`: Fecha y hora de fin de la sesión.\n    \n- `personas`: Lista de personas asignadas a la sesión (si las hay).\n    \n\n``` json\n[\n    {\n        \"id\": 1,\n        \"fechaCreacion\": \"2025-04-03T14:43:07.157828\",\n        \"horaInicio\": \"2025-04-03T10:00:00\",\n        \"horaFin\": \"2025-04-03T12:00:00\",\n        \"personas\": [\n            {\n                \"id\": 1,\n                \"nombre\": \"Jhon\"\n            },\n            {\n                \"id\": 2,\n                \"nombre\": \"Chrystian\"\n            }\n        ]\n    }\n]\n\n ```"
+			},
+			"response": []
+		},
+		{
+			"name": "Crear nueva sesion",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Add your name in the body\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/sesiones?horaInicio={{yyyy-MM-dd'T'HH:mm:ss}}&horaFin={{yyyy-MM-dd'T'HH:mm:ss}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"sesiones"
+					],
+					"query": [
+						{
+							"key": "horaInicio",
+							"value": "{{yyyy-MM-dd'T'HH:mm:ss}}"
+						},
+						{
+							"key": "horaFin",
+							"value": "{{yyyy-MM-dd'T'HH:mm:ss}}"
+						}
+					]
+				},
+				"description": "### **Crear una nueva sesión**\n\n**Ruta**: `POST /sesiones`  \n**Descripción**: Este endpoint permite crear una nueva sesión especificando su hora de inicio y hora de fin. La fecha y hora deben proporcionarse en la url con el formato ISO-8601 (`yyyy-MM-dd'T'HH:mm:ss`).\n\n**Parámetros**:\n\n- `horaInicio` _(query parameter, requerido)_: Fecha y hora de inicio de la conferencia.\n    \n- `horaFin` _(query parameter, requerido)_: Fecha y hora de finalización de la conferencia.\n    \n\nEjemplo de solicitud:\n\n[http://localhost:8080/sesiones?horaInicio=2025-04-08T10:00:00&amp;horaFin=2025-04-08T12:00:00](http://localhost:8080/sesiones?horaInicio=2025-04-03T10:00:00&horaFin=2025-04-03T12:00:00)\n\n**Respuesta:**  \nDevuelve un objeto JSON con los detalles de la sesión.\n\n``` json\n{\n    \"id\": 3,\n    \"fechaCreacion\": \"2025-04-08T10:38:41.0201571\",\n    \"horaInicio\": \"2025-04-08T10:00:00\",\n    \"horaFin\": \"2025-04-08T12:00:00\",\n    \"personas\": []\n}\n\n ```"
+			},
+			"response": []
+		},
+		{
+			"name": "Agregar persona a sesion",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"url": "http://localhost:8080/sesiones/{{sesionId}}/persona/{{personaId}}",
+				"description": "### Add Person to Session\n\n**Ruta**:`POST/sesiones/{sesionId}/persona/{personaId}`  \n**Descripción**: Este endpoint permite asignar una persona a una sesión específica, siempre y cuando no haya conflictos de horarios con otras sesiones en las que participe la persona.\n\n**Parámetros**:\n\n- `sesionId` _(path parameter, requerido)_: ID de la sesión a la que se desea asignar la persona.\n    \n- `personaId` _(path parameter, requerido)_: ID de la persona que se desea agregar a la sesión.\n    \n\n**Respuesta**:  \nDevuelve un valor booleano:\n\n- `true`: Si la persona fue asignada exitosamente a la sesión.\n    \n- `false`: Si no se pudo asignar debido a un conflicto de horarios.\n    \n\n**Ejemplo de solicitud**\n\n```\ncurl -X POST \"http://localhost:8080/sesiones/1/persona/101\"\n\n ```\n\nEjemplo de respuesta sin conflictos\n\n``` json\ntrue\n\n ```\n\nEjemplo de respuesta con conflicto dehorarios\n\n``` json\nfalse\n\n ```"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
